@@ -1,28 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <h1>Edit Coupon</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('coupons.update', $coupon->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="code">Coupon Code</label>
-            <input type="text" name="code" class="form-control" value="{{ $coupon->code }}" required>
+            <label for="code">Code:</label>
+            <input type="text" name="code" value="{{ $coupon->code }}" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="discount">Discount</label>
-            <input type="number" name="discount" class="form-control" value="{{ $coupon->discount }}" step="0.01" required>
+            <label for="discount">Discount (%):</label>
+            <input type="number" name="discount" value="{{ $coupon->discount }}" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="valid_from">Valid From</label>
-            <input type="date" name="valid_from" class="form-control" value="{{ $coupon->valid_from }}" required>
+            <label for="expiration_date">Expiration Date:</label>
+            <input type="date" name="expiration_date" value="{{ $coupon->expiration_date }}" class="form-control" required>
         </div>
-        <div class="form-group">
-            <label for="valid_to">Valid To</label>
-            <input type="date" name="valid_to" class="form-control" value="{{ $coupon->valid_to }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-success">Update Coupon</button>
     </form>
-</div>
 @endsection

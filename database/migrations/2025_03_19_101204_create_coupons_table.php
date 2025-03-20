@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); 
             $table->string('code')->unique(); 
             $table->decimal('discount', 5, 2);
-            $table->date('expiry_date');
+            $table->date('expiry_date')->nullable();
             $table->timestamps(); 
         });
     }
