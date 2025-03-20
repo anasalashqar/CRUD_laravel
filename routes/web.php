@@ -4,7 +4,10 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CouponController;
+
 use App\Http\Controllers\OrderController;
+
 
 Route::get('/', function () {
     return 'Hello World';
@@ -13,6 +16,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('products', ProductController::class);
 });
+
+
+
+Route::resource('coupons', CouponController::class);
 
 //login
 Route::get('/register', [UserController::class, 'showRegisterForm']); // Show register form
@@ -30,3 +37,4 @@ Route::put('/admin_users/{user}', [AdminUserController::class, 'update'])->name(
 Route::delete('/admin_users/{user}', [AdminUserController::class, 'delete'])->name('admin_users.destroy'); // Handle user deletion
 
 Route::resource('orders', OrderController::class);
+
