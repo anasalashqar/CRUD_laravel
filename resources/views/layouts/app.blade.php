@@ -58,7 +58,7 @@
 
             <!-- Nav Item - Products Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts"
+                <a class="nav-link collapsed" href="/admin/products" data-toggle="collapse" data-target="#collapseProducts"
                     aria-expanded="true" aria-controls="collapseProducts">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Products</span>
@@ -73,12 +73,41 @@
             </li>
 
             <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Orders
+            </div>
+
+            <!-- Nav Item - Orders -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('orders.index') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+
+            <div class="sidebar-heading">
+                Users
+            </div>
+
+            <!-- Nav Item - Orders -->
+            <li class="nav-item">
+                <a class="nav-link" href="/adminUser">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
         </ul>
         <!-- End of Sidebar -->
 
