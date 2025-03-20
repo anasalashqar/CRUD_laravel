@@ -24,7 +24,7 @@
                     <label for="quantity" class="form-label">Quantity</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb3">
                     <label for="image" class="form-label">Product Image</label>
                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
                 </div>
