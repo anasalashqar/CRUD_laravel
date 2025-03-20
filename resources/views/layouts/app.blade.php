@@ -58,7 +58,7 @@
 
             <!-- Nav Item - Products Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts"
+                <a class="nav-link collapsed" href="/admin/products" data-toggle="collapse" data-target="#collapseProducts"
                     aria-expanded="true" aria-controls="collapseProducts">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Products</span>
@@ -85,6 +85,18 @@
                 <a class="nav-link" href="{{ route('orders.index') }}">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Orders</span>
+                </a>
+            </li>
+
+            <div class="sidebar-heading">
+                Users
+            </div>
+
+            <!-- Nav Item - Orders -->
+            <li class="nav-item">
+                <a class="nav-link" href="/adminUser">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Users</span>
                 </a>
             </li>
 
