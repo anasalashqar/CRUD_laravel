@@ -41,7 +41,7 @@
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to archive this order?')">Archive</button>
+                            <button type="submit" class="btn btn-danger btn-sm" >Archive</button>
                         </form>
                     </td>
                 </tr>
