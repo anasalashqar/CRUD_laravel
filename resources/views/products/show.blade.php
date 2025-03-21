@@ -26,7 +26,6 @@
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-        /* Image on the left */
     }
 
     .product-details {
@@ -35,11 +34,9 @@
 
     .product-image {
         margin-right: 20px;
-        /* Add some spacing between details and image */
     }
 
     .product-image img {
         width: 300px;
-        /* Increased image size */
     }
 </style>

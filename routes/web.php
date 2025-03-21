@@ -13,9 +13,8 @@ Route::get('/', function () {
     return 'Hello World';
 });
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::resource('products', ProductController::class);
-});
+Route::resource('products', ProductController::class);
+Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
 
 
