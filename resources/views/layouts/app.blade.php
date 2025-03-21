@@ -100,6 +100,18 @@
                 </a>
             </li>
 
+            <div class="sidebar-heading">
+                Copons
+            </div>
+
+            <!-- Nav Item - Orders -->
+            <li class="nav-item">
+                <a class="nav-link" href="/coupons">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Copons</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
