@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class ProductController extends Controller
 {
@@ -100,7 +102,7 @@ class ProductController extends Controller
     {
         $product = Product::withTrashed()->findOrFail($id);
         $product->restore();
-        \Log::info('Product restored: ' . $product->id);
+        Log::info('Product restored: ' . $product->id);
         return redirect()->route('products.index')->with('success', 'Product restored successfully.');
     }
 }

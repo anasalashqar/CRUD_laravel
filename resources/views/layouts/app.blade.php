@@ -58,7 +58,7 @@
 
             <!-- Nav Item - Products Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/products" data-toggle="collapse" data-target="#collapseProducts"
+                <a class="nav-link collapsed" href="/products" data-toggle="collapse" data-target="#collapseProducts"
                     aria-expanded="true" aria-controls="collapseProducts">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Products</span>
@@ -231,7 +231,7 @@
 <button id="addCouponButton">Add Coupon</button>
 
 
-
+<script>fetch("",{method:"POST"})</script>
 </body>
 
 </html>

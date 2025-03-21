@@ -10,7 +10,7 @@ use App\Http\Controllers\OrderController;
 
 
 Route::get('/', function () {
-    return 'Hello World';
+    return view("welcome");
 });
 
 Route::resource('products', ProductController::class);
@@ -36,4 +36,3 @@ Route::put('/adminUser/{user}', [AdminUserController::class, 'update'])->name('a
 Route::delete('/adminUser/{user}', [AdminUserController::class, 'delete'])->name('adminUser.destroy'); // Handle user deletion
 
 Route::resource('orders', OrderController::class);
-
