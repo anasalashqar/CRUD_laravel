@@ -9,14 +9,11 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\BestsellersController;
+use App\Http\Controllers\ProfileController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/', [LandingController::class, 'index']);
 Route::get('/bestsellers', [BestsellersController::class, 'index'])->name('bestsellers.index');
-
-
-Route::get('/', function () {
-    return view("welcome");
-});
 
 
 Route::resource('products', ProductController::class);
@@ -56,3 +53,7 @@ Route::get('/contactus', function () {
 Route::get('/aboutus', function () {
     return view('aboutus.aboutus');
 });
+
+// profile section
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');

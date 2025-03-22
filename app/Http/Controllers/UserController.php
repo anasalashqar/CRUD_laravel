@@ -67,7 +67,7 @@ class UserController extends Controller
         // ✅ Set session (optional, if you still want to use session-based login)
         session(['user_id' => $user->id]);
 
-        return redirect('/admin/products')->with('success', 'Login successful!');
+        return redirect('/')->with('success', 'Login successful!');
     }
 
 
@@ -94,6 +94,6 @@ class UserController extends Controller
         session()->forget('user_id');
         Cookie::queue(Cookie::forget('remember_token'));
 
-        return redirect('/login')->with('success', 'Logged out successfully.');
+        return redirect('/')->with('success', 'Logged out successfully.');
     }
 }
