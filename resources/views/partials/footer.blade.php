@@ -11,18 +11,22 @@
                 <p class="mb-0">Bringing nature closer to you.</p>
             </div>
 
-            <!-- Right side: Social or Quick Links -->
-            <div class="col-md-6 text-md-end">
-                <a href="#" class="text-white me-3 text-decoration-none">
-                    <i class="bi bi-shop-window me-1"></i> Bestsellers
-                </a>
-                <a href="#" class="text-white me-3 text-decoration-none">
-                    <i class="bi bi-envelope-fill me-1"></i> Contact
-                </a>
-                <a href="#" class="text-white text-decoration-none">
-                    <i class="bi bi-info-circle-fill me-1"></i> About </a>
-            </div>
-        </div>
+         <!-- Right side: Social or Quick Links -->
+<div class="col-md-6 text-md-end">
+    
+    <a href="{{ url('/services') }}" class="text-white me-3 text-decoration-none">
+    <i class="bi bi-gear-fill me-1"></i> Services
+</a>
+
+
+    <a href="#" class="text-white me-3 text-decoration-none">
+        <i class="bi bi-envelope-fill me-1"></i> Contact
+    </a>
+
+    <a href="#" class="text-white text-decoration-none">
+        <i class="bi bi-info-circle-fill me-1"></i> About
+    </a>
+</div>
 
         <hr class="border-white opacity-25 my-3">
 

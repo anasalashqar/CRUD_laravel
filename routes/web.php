@@ -18,6 +18,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('products', ProductController::class);
 });
 
+Route::get('/services', function () {
+    return view('services');
+});
+
 
 
 Route::resource('coupons', CouponController::class);

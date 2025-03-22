@@ -19,8 +19,11 @@
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Services</a>
-                </li>
+                    <a class="nav-link {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">
+        Services
+    </a>
+</li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About Us</a>
                 </li>
@@ -67,7 +70,3 @@
         </div>
     </div>
 </nav>
-
-
-
-
