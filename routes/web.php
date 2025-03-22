@@ -36,3 +36,13 @@ Route::put('/adminUser/{user}', [AdminUserController::class, 'update'])->name('a
 Route::delete('/adminUser/{user}', [AdminUserController::class, 'delete'])->name('adminUser.destroy'); // Handle user deletion
 
 Route::resource('orders', OrderController::class);
+
+
+//contac-us and about-us routes
+Route::get('/contactus', function () {
+    return view('contactus.contactus');
+});
+
+Route::get('/aboutus', function () {
+    return view('aboutus.aboutus');
+});
