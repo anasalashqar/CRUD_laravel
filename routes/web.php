@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicProductController;
 use App\Http\Controllers\CouponController;
+
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\BestsellersController;
 use App\Http\Controllers\ProfileController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
+
 
 
 Route::get('/', [LandingController::class, 'index']);
@@ -25,9 +26,15 @@ Route::get('/services', function () {
     return view('services');
 });
 
-
-
+Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+Route::post('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 Route::resource('coupons', CouponController::class);
+Route::get('/product', [ProductController::class, 'index']);
+
+
+
+
+
 
 //login
 Route::get('/register', [UserController::class, 'showRegisterForm']); // Show register form
@@ -48,6 +55,7 @@ Route::get('/public_products', [PublicProductController::class, 'index'])->name(
 Route::get('/public_products/{product}', [PublicProductController::class, 'show'])->name('public_products.show');
 
 Route::resource('orders', OrderController::class);
+
 
 Route::get('/cart', [PublicProductController::class, 'cart'])->name('cart');
 Route::get('/checkout', [PublicProductController::class, 'checkout'])->name('checkout');
