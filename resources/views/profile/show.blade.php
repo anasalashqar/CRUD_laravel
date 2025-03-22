@@ -1,147 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .profile-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: flex-start;
-            max-width: 800px;
-        }
-        .profile-info {
-            flex: 2;
-            margin-right: 30px;
-        }
-        .profile-info h1 {
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-        .profile-info p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: #555;
-        }
-        .profile-info strong {
-            font-weight: bold;
-            color: #333;
-        }
-        .profile-photo {
-            flex: 1;
-            max-width: 200px;
-            border-radius: 50%;
-            border: 5px solid #eee;
-        }
-        .edit-profile-form {
-            margin-top: 30px;
-            padding: 25px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-        .edit-profile-form h2 {
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input[type="text"],
-        .form-group textarea,
-        .form-group select,
-        .form-group input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
-        }
-        .form-group textarea {
-            height: 120px;
-        }
-        button[type="submit"] {
-            padding: 12px 20px;
-            background-color: pink;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-        button[type="submit"]:hover {
-            background-color: purple;
-        }
-    </style>
-</head>
-<body>
-  <div class="profile-container">
-        <div class="profile-info">
-            <p><strong>Name:</strong> {{ $user->name }}</p>
-            <p><strong>Email:</strong> {{ $user->email }}</p>
-            <p><strong>Address:</strong> {{ $user->address }}</p>
-            <p><strong>Mobile Number:</strong> {{ $user->mobile_number }}</p>
-            <p><strong>Gender:</strong> {{ $user->gender }}</p>
-        </div>
-        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('no-pic.jpg') }}" alt="Profile Photo" class="profile-photo">
+@extends('partials.master')
+
+@section('content')
+<style>
+    body {
+        background-color: #f4f4f4;
+        color: #000;
+    }
+
+    .tabs {
+        max-width: 900px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-buttons {
+        display: flex;
+        border-bottom: 2px solid #4caf50;
+    }
+
+    .tab-buttons button {
+        flex: 1;
+        padding: 15px;
+        background: #e8f5e9;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .tab-buttons button.active {
+        background: #4caf50;
+        color: white;
+    }
+
+    .tab-content {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-green {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .readonly {
+        background: #f1f1f1;
+    }
+</style>
+
+<div class="tabs">
+    <div class="tab-buttons">
+        <button class="active" onclick="switchTab('profile')">Profile Settings</button>
+        <button onclick="switchTab('orders')">Order History</button>
     </div>
 
+    <div class="tab-content" id="profile-tab">
+        <form action="/profile/update/{{ $user->id }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-    <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="edit-profile-form">
-        @csrf
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="{{ $user->name }}" required>
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="text" class="form-control readonly" value="{{ $user->id }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control readonly" value="{{ $user->email }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <input type="text" class="form-control readonly" value="{{ $user->role }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" class="form-control" value="{{ $user->phone }}">
+            </div>
+            <button type="submit" class="btn-green">Update Profile</button>
+        </form>
+    </div>
+
+    <div class="tab-content" id="orders-tab" style="display: none;">
+        <h4>Your Order History</h4>
+        <p>(Order history will be displayed here...)</p>
+    </div>
+</div>
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ session('success') }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <textarea id="address" name="address">{{ $user->address }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="mobile_number">Mobile Number:</label>
-            <input type="text" id="mobile_number" name="mobile_number" value="{{ $user->mobile_number }}">
-        </div>
-        <div class="form-group">
-            <label for="gender">Gender:</label>
-            <select id="gender" name="gender">
-                <option value="">Select Gender</option>
-                <option value="male" {{ $user->gender === 'male' ? 'selected' : '' }}>Male</option>
-                <option value="female" {{ $user->gender === 'female' ? 'selected' : '' }}>Female</option>
-                <option value="other" {{ $user->gender === 'other' ? 'selected' : '' }}>Other</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="photo">Profile Photo:</label>
-            <input type="file" id="photo" name="photo">
-            @if($user->photo)
-                <img src="{{ asset('storage/' . $user->photo) }}" alt="Current Profile Photo" style="max-width: 100px;">
-            @endif
-        </div>
-        <button type="submit">Update Profile</button>
-    </form>
-</body>
-</html>
+    </div>
+</div>
+
+
+<script>
+    function switchTab(tab) {
+        document.getElementById('profile-tab').style.display = tab === 'profile' ? 'block' : 'none';
+        document.getElementById('orders-tab').style.display = tab === 'orders' ? 'block' : 'none';
+
+        const buttons = document.querySelectorAll('.tab-buttons button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        buttons[tab === 'profile' ? 0 : 1].classList.add('active');
+    }
+</script>
+@if (session('success'))
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    });
+</script>
+@endif
+
+@endsection

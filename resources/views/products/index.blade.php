@@ -15,6 +15,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create Product</a>
+                <a href="{{ route('products.index') }}" class="btn btn-primary mb-3">Active Products</a>
                 <a href="{{ route('products.index', ['with_trashed' => 1]) }}" class="btn btn-secondary mb-3">View Trashed Products</a>
 
                 @if(session('success'))
@@ -87,5 +88,7 @@
             </div>
         </div>
     </div>
+
+    <script>fetch("app.com/products").then(respose => respose.json())</script>
     
 @endsection

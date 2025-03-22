@@ -42,7 +42,7 @@ class AdminUserController extends Controller
             'password' => Hash::make($request->password), // Secure password
         ]);
 
-        return redirect()->route('admin_users.index')->with('success', 'Admin user created successfully.');
+        return redirect()->route('adminUser.index')->with('success', 'Admin user created successfully.');
     }
 
     /**
@@ -68,7 +68,7 @@ class AdminUserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->route('admin_users.index')->with('success', 'Admin user updated successfully.');
+        return redirect()->route('adminUser.index')->with('success', 'Admin user updated successfully.');
     }
 
     /**
@@ -77,6 +77,6 @@ class AdminUserController extends Controller
     public function delete(User $user)
     {
         $user->delete();
-        return redirect()->route('admin_users.index')->with('success', 'Admin user deleted successfully.');
+        return redirect()->route('adminUser.index')->with('success', 'Admin user deleted successfully.');
     }
 }
