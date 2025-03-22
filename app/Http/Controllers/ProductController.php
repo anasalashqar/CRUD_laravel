@@ -71,12 +71,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $imagePath = null;
+        $data = $request->only(['name', 'description', 'price', 'quantity']);
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName(), 'public');
+            $data['image'] = $imagePath; // Add image path to the data array
         }
 
-        $product->update(array_merge($request->only(['name', 'description', 'price', 'quantity']), ['image' => $imagePath]));
+        $product->update($data); // Update product with all data (including image if uploaded)
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 

@@ -4,10 +4,9 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicProductController;
 use App\Http\Controllers\CouponController;
-
 use App\Http\Controllers\OrderController;
-
 
 Route::get('/', function () {
     return 'Hello World';
@@ -16,14 +15,12 @@ Route::get('/', function () {
 Route::resource('products', ProductController::class);
 Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
-
-
 Route::resource('coupons', CouponController::class);
 
 //login
 Route::get('/register', [UserController::class, 'showRegisterForm']); // Show register form
 Route::post('/register', [UserController::class, 'register']); // Handle registration
-Route::get('/login', [UserController::class, 'showLoginForm']); // Show login form
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('login'); // Show login form
 Route::post('/login', [UserController::class, 'login']); // Handle login
 Route::get('/logout', [UserController::class, 'logout']); // Handle logout
 
@@ -34,6 +31,13 @@ Route::post('/admin_users', [AdminUserController::class, 'store'])->name('admin_
 Route::get('/admin_users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin_users.edit'); // Show edit user form
 Route::put('/admin_users/{user}', [AdminUserController::class, 'update'])->name('admin_users.update'); // Handle update user
 Route::delete('/admin_users/{user}', [AdminUserController::class, 'delete'])->name('admin_users.destroy'); // Handle user deletion
+Route::get('/public_products', [PublicProductController::class, 'index'])->name('public_products.index');
+Route::get('/public_products/{product}', [PublicProductController::class, 'show'])->name('public_products.show');
 
 Route::resource('orders', OrderController::class);
-
+Route::get('/cart', [PublicProductController::class, 'cart'])->name('cart');
+Route::get('/checkout', [PublicProductController::class, 'checkout'])->name('checkout');
+Route::post('/add-to-cart/{id}', [PublicProductController::class, 'addToCart'])->name('cart.add');
+Route::patch('/update-cart', [PublicProductController::class, 'updateCart'])->name('update.cart');
+Route::delete('/remove-from-cart', [PublicProductController::class, 'removeFromCart'])->name('remove.from.cart');
+Route::post('/place-order', [PublicProductController::class, 'placeOrder'])->name('place.order');
