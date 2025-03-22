@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CouponController;
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\BestsellersController;
 
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/bestsellers', [BestsellersController::class, 'index'])->name('bestsellers.index');
 
-Route::get('/', function () {
-    return 'Hello World';
-});
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('products', ProductController::class);
