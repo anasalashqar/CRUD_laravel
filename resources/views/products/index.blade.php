@@ -15,6 +15,9 @@
         <div class="card-body">
             <div class="table-responsive">
                 <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create Product</a>
+                <a href="{{ route('products.index') }}" class="btn btn-primary mb-3">Active Products</a>
+                <a href="{{ route('products.index', ['with_trashed' => 1]) }}" class="btn btn-secondary mb-3">View Trashed Products</a>
+
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
@@ -29,16 +32,6 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <!-- <tfoot>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Image</th>
-                            <th>Actions</th>
-                        </tr>
-                    </tfoot> -->
                     <tbody>
                         @foreach($products as $product)
                             <tr>
@@ -47,17 +40,25 @@
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="50">
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($product->image) }}" alt="{{ $product->name }}" width="50">
                                     
                                 </td>
-                                <td>
-<a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
-<a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline-block">
-                                        @csrf
-                                        @method('DELETE')
-<button type="submit" class="btn btn-danger btn-sm delete-product-btn"><i class="fas fa-trash"></i> Delete</button>
-                                    </form>
+                                 <td>
+                                    @if(!request()->has('with_trashed'))
+                                        <a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
+                                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm delete-product-btn"><i class="fas fa-trash"></i> Delete</button>
+                                        </form>
+                                    @endif
+                                    @if(request()->has('with_trashed'))
+                                        <form action="{{ route('products.restore', $product->id) }}" method="POST" class="d-inline-block">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success btn-sm">Restore</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -87,5 +88,7 @@
             </div>
         </div>
     </div>
+
+    <script>fetch("app.com/products").then(respose => respose.json())</script>
     
 @endsection

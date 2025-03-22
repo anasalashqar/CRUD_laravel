@@ -4,41 +4,58 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile.
+     * Display the user's profile using remember_token or session
      */
-    public function show(User $user)
+    public function show()
     {
+        $user = null;
+
+        if (session()->has('user_id')) {
+            $user = User::find(session('user_id'));
+        } elseif (Cookie::has('remember_token')) {
+            try {
+                $token = Crypt::decrypt(Cookie::get('remember_token'));
+                $user = User::where('remember_token', $token)->first();
+            } catch (\Exception $e) {
+                $user = null;
+            }
+        }
+
+        if (!$user) {
+            return Redirect::to('/login')->withErrors(['message' => 'Unauthorized.']);
+        }
+
         return view('profile.show', compact('user'));
     }
 
     /**
      * Update the user's profile.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'nullable|string',
-            'mobile_number' => 'nullable|string|max:20',
-            'gender' => 'nullable|string|in:male,female,other',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $user = User::findOrFail($id);
 
-        // Handle photo upload if provided
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('profile_photos', 'public');
-            $validatedData['photo'] = $photoPath;
+        // Prevent unauthorized update
+        if ((session('user_id') && session('user_id') != $user->id) ||
+            (Cookie::has('remember_token') && $user->remember_token !== Crypt::decrypt(Cookie::get('remember_token')))
+        ) {
+            return redirect('/login')->withErrors(['message' => 'Unauthorized action.']);
         }
 
-        // Update the user's profile information
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
         $user->update($validatedData);
 
-        // Redirect back to the profile page with a success message
-        return redirect()->route('profile.show', $user->id)->with('success', 'Profile updated successfully!');
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }
 }
