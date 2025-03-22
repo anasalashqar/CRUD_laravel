@@ -7,14 +7,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CouponController;
 
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\BestsellersController;
+
+Route::get('/', [LandingController::class, 'index']);
+Route::get('/bestsellers', [BestsellersController::class, 'index'])->name('bestsellers.index');
 
 
 Route::get('/', function () {
     return view("welcome");
 });
 
+
 Route::resource('products', ProductController::class);
 Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
+
+Route::get('/services', function () {
+    return view('services');
+});
 
 
 
