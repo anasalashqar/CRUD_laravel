@@ -4,44 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login - Welcome Back</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h1 class="text-center mt-4">Login</h1>
+    <div class="position-absolute top-0 start-0 p-4">
+        <a href="/" class="btn btn-outline-light">
+            ← Home
+        </a>
+    </div>
 
-            @if($errors->any())
-            <div class="alert alert-danger">{{ $errors->first() }}</div>
-            @endif
+    <div class="login-box">
+        <h2 class="welcome-text">👋 Welcome Back!</h2>
 
-            @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
+        @if($errors->any())
+        <div class="alert alert-danger">{{ $errors->first() }}</div>
+        @endif
 
-            <form action="/login" method="POST" class="card p-4 shadow">
-                @csrf
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required>
-                </div>
+        @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-
-                <button type="submit" class="btn btn-success w-100">Login</button>
-            </form>
-
-            <div class="text-center mt-3">
-                <a href="/register">Don't have an account? Register here</a>
+        <form action="/login" method="POST">
+            @csrf
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="you@example.com" required>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">Log In</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/register" class="text-decoration-none">Don't have an account? <strong>Register</strong></a>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

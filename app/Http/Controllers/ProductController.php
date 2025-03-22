@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::query();
+
+        if ($request->has('with_trashed')) {
+            // Only show trashed products
+            $products->onlyTrashed();
+        } else {
+            // Only show non-trashed products
+            $products->where('deleted_at', null);
+        }
+
+        $products = $products->get();
+
         return view('products.index', compact('products'));
     }
 
@@ -72,9 +85,24 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request, Product $product)
     {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        if ($request->has('with_trashed')) {
+            // Permanent delete from trashed view
+            $product->forceDelete();
+            return redirect()->route('products.index', ['with_trashed' => 1])->with('success', 'Product permanently deleted.');
+        } else {
+            // Soft delete from regular view and redirect to trashed
+            $product->delete();
+            return redirect()->route('products.index', ['with_trashed' => 1])->with('success', 'Product moved to trash.');
+        }
+    }
+
+    public function restore($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+        $product->restore();
+        Log::info('Product restored: ' . $product->id);
+        return redirect()->route('products.index')->with('success', 'Product restored successfully.');
     }
 }
