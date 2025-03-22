@@ -17,7 +17,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 Route::post('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 Route::resource('coupons', CouponController::class);
-
+Route::get('/product', [ProductController::class, 'index']);
 
 
 
