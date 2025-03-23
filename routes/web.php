@@ -1,11 +1,10 @@
 <?php
-
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CouponController;
-
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\BestsellersController;
@@ -57,3 +56,11 @@ Route::get('/aboutus', function () {
 // profile section
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+// Admin routes
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+    
+    Route::resource('categories', CategoryController::class);
+});
