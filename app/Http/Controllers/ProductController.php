@@ -29,6 +29,8 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -55,9 +57,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Request $request)
     {
-        return view('products.show', compact('product'));
+        $products = Product::query();
+
+        if ($request->has('with_trashed')) {
+            // Only show trashed products
+            $products->onlyTrashed();
+        } else {
+            // Only show non-trashed products
+            $products->where('deleted_at', null);
+        }
+
+        $products = $products->get();
+
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -108,4 +122,3 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product restored successfully.');
     }
 }
-

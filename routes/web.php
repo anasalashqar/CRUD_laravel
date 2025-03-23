@@ -23,6 +23,7 @@ Route::get('/bestsellers', [BestsellersController::class, 'index'])->name('bests
 Route::resource('products', ProductController::class);
 Route::post('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
+Route::get('/product', [ProductController::class, 'show'])->name('product.show');
 
 Route::get('/services', function () {
     return view('services');
@@ -31,7 +32,6 @@ Route::get('/services', function () {
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 Route::post('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 Route::resource('coupons', CouponController::class);
-Route::get('/product', [ProductController::class, 'index']);
 
 
 
