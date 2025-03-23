@@ -1,4 +1,5 @@
-@extends('layouts.public')
+@extends('partials.master')
+
 
 @section('content')
     <h1>Checkout</h1>

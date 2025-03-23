@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('partials.master')
 
 @section('content')
     <div class="container">
