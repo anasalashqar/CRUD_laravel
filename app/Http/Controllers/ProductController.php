@@ -29,6 +29,8 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -55,9 +57,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Request $request)
     {
-        return view('products.show', compact('product'));
+        $products = Product::query();
+
+        if ($request->has('with_trashed')) {
+            // Only show trashed products
+            $products->onlyTrashed();
+        } else {
+            // Only show non-trashed products
+            $products->where('deleted_at', null);
+        }
+
+        $products = $products->get();
+
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -73,12 +87,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $imagePath = null;
+        $data = $request->only(['name', 'description', 'price', 'quantity']);
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName(), 'public');
+            $data['image'] = $imagePath; // Add image path to the data array
         }
 
-        $product->update(array_merge($request->only(['name', 'description', 'price', 'quantity']), ['image' => $imagePath]));
+        $product->update($data); // Update product with all data (including image if uploaded)
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 

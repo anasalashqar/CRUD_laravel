@@ -19,8 +19,8 @@
                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link {{ request()->is('services') ? 'active' : '' }}" href="{{ url('/services') }}">
-                           Services
+                       <a class="nav-link {{ request()->is('product') ? 'active' : '' }}" href="{{ url('/product') }}">
+                           Products
                        </a>
                    </li>
 
@@ -58,7 +58,7 @@
                    @if ($user)
                    {{-- Authenticated nav links --}}
                    <li class="nav-item">
-                       <a class="nav-link" href="#">
+                       <a class="nav-link" href="/cart">
                            <i class="bi bi-cart3 me-1"></i>
                        </a>
                    </li>
